@@ -1,0 +1,157 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{listings, float, graphicx, amsmath, hyperref, bbm}
+
+\setcounter{secnumdepth}{2}
+\newcommand{\sectionbreak}{\clearpage}
+\graphicspath{{./img/}}
+\DeclareGraphicsExtensions{.png}
+\renewcommand*\thesection{\arabic{section}}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\renewcommand{\labelitemi}{---}
+\newcommand{\x}[1]{\texttt{#1}}
+\newcommand{\p}{\paragraph*{}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\img}[3][1]{
+ \begin{figure}[H]
+  \centering
+  \includegraphics[scale=#1]{#2}
+  \caption{#3}
+ \end{figure}}
+
+\begin{document}
+\title{Cours $n^o$1 - Rappels}
+\date{}
+\maketitle
+\section{Concepts}
+ \subsection{Alphabet}
+  \subsubsection{notation}
+  \p Pierre de base de toute étude, l'alphabet sera noté $\Sigma$, sa
+  taille, ou cardinal, sera notée $\mid\Sigma\mid$.
+  \subsubsection{exemples}
+  \bi
+   \item 26 lettres et l'espace;
+   \item ASCII, ASCII étendu, Unicode;
+   \item en bio informatique : 4 lettres (ADN/ARN), 20 lettres (protéines)
+   \item TALN : dictionnaire (les éléments de l'alphabet seront alors des mots)
+  \ei
+  \subsubsection{considérations sur la complexité}
+  \p Considérons le chiffre de César suivant :\\
+  \bi
+   \item A $\rightarrow$ E;
+   \item B $\rightarrow$ F;
+   \item C $\rightarrow$ G;
+   \item ...;
+   \item Z $\rightarrow$ D.
+  \ei
+  \p En trouver la clef n'est pas difficile: le E apparaît à environ 20\%{} en
+  français : une simple analyse statistique donnera immédiatement
+  d'excellents résultats. Si l'on considère maintenant le même code mais sur une
+  table ASCII étendue, alors, avec les accents et la casse, cette même analyse se
+  révèlera plus complexe à mettre en place.
+ \subsection{Mot}
+ \p Un mot, ou séquence, est une suite finie de symboles de l'alphabet. L'ensemble
+ de tous les mots possibles est noté $\Sigma^*$ avec :
+ \[
+ \Sigma^* = \bigcup^{\infty}_{i = 0} \Sigma^i
+ \]
+ où $\Sigma^i$ est l'ensemble des mots de longueur $i$.
+ \subsection{Langage}
+ \p Un langage est un ensemble de mots (potentiellement infini mais dénombrable).
+\section{Comptage}
+ \p Prenons comme exemple \x{Bonjour} :\\
+ \bi
+  \item \x{on} est un facteur de \x{Bonjour};
+  \item \x{Bon} est un facteur et un préfixe de \x{Bonjour};
+  \item \x{jour} est un facteur et un suffixe de \x{Bonjour};
+  \item \x{Bjr} est une sous-séquence de \x{Bonjour} (et n'est pas un facteur).
+ \ei
+ \p On note $w[i...j]$ le facteur de $w$ composé des symboles de l'indice $i$ à
+ l'indice $j$. On note $w[i]$ le $i^{e}$ symbole de $w$.
+ \p L'analyse des sous-séquences est utilisée par exemple pour détecter des
+ instrusions informatiques : si l'on considère le langage des fichiers de logs
+ dont les mots sont une phrase loggée, alors une intrusion se révèle par une
+ sous-séquence particulière, d'où la nécessité de les rechercher rapidement.
+\section{Distances}
+ La notion de distance est assez intuitive, appliquée à deux objets
+ dans l'espace, plus la distance est petite plus les objets sont
+ proches et lorsque la distance est nulle on peut supposer qu'ils sont
+ identiques. On suivra le même raisonnement pour la distance entre
+ mots ou entre langages.
+ \subsection{Distances entre mots}
+  \subsubsection{Distance de Hamming}
+  \[
+  D_H(w, w') = \sum^{\mid{}w\mid}_{i = 1} \mathbbm{1}_{w[i] \neq w'[i]}
+  \]
+  \p Il faut en prérequis que $w$ et $w'$ fassent la même longueur.
+  Intuitivement, la distance de Hamming est le nombre de caractères qui
+  diffèrent d'une chaîne à l'autre.
+  \p exemple : $D_H($CHENES$,$ CHEVRE$)=3$
+  \subsubsection{Distance de Levenshtein (ou d'édition)}
+  \p Soit 3 opérations :\\
+  \bi
+   \item supprimer un symbole;
+   \item insérer un symbole;
+   \item modifier un symbole.
+  \ei
+  \p Alors :
+  \[
+  D_L(w, w') = \text{nombre minimal d'opérations pour passer de }w\text{ à }w'
+  \]
+  \p exemple : $D_L($CHENES$,$ CHEVRE$)=3$
+  \subsubsection{Extension à la distance de Hamming}
+  \p Par un doctorant du LINA : [2002 MANCHERON], STARS.
+  \p Cette distance est basée sur une similarité entre séquences :\\ \\
+  \begin{tabular}{ l | l l l l }
+   $w$  & $w_1$  & $w_2$  & ... & $w_N$  \\
+   $w'$ & $w'_1$ & $w'_2$ & ... & $w'_N$ \\ \hline
+   $s$  & $s_1$ & $s_2$ & ... & $s_N$ \\
+  \end{tabular}
+  \p où $w$ et $w'$ sont les mots à comparer et où
+  $s_i=\mathbbm{1}_{w[i] = w'[i]}$
+  \p $s$ s'écrit :
+  \begin{tabular}{ c c c c c c }
+   $0...0$  & $1...1$ & $0...0$ & $...$ & $1...1$ & $0...0$ \\
+   $z_0$    & $u_1$   & $z_1$   &       & $u_k$   & $z_k$   \\
+  \end{tabular}
+  \p Deux fonctions, $f_0(n)$ et $f_1(n)$ servent à pondérer les séquences de
+  $0$ et de $1$. La similarité s'exprime alors :
+  \[
+  S(w, w') = \sum^k_{j = 1}\bigg(f_0(z_j) + f_1(u_j)\bigg) + f_0(z_0)
+  \]
+  \p Pour retomber sur Hamming on prend $f_0(n) = \mid{}n\mid$ et $f_1(n) = 0$.
+  \subsubsection{Noyau}
+  Soit $F(w)$ l'ensemble des facteurs de $w$. Le noyau de $w$ et $w'$ est
+  alors :
+  \[
+  N(w, w') = F(w) \cap F(w')
+  \]
+  \p exemple : Soit $w = bon$ et $w' = thon$ alors
+  $N(w, w') = \{\epsilon, o, n, on\}$
+ \subsection{Distance entre langages}
+ On remarquera que sans le support des statistiques, les outils
+ permettant de mesurer la distance entre langages sont très peu
+ pertinent.
+  \subsubsection{Distance de Jaccard}
+  Soit $A$ et $B$ deux langages (et donc deux ensembles), alors la distance de
+  Jaccard entre ces deux langages est :
+  \[
+  D_j(A, B) = \frac{\mid A \cup B \mid - \mid A \cap B \mid}{\mid A \cup B \mid}
+  \]
+  \p exemple : soit $L_1 = \{1, 2, 3, 4, 5, 6, 7, 8, 9\}$ et
+  $L_2 = \{6, 7, 8, 9, 10, 11, 12, 13, 14\}$. Alors :
+  \[
+  D_j(L_1, L_2) = \frac{14 - 4}{14}
+  \]
+\end{document}
