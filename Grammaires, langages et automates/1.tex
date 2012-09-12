@@ -65,7 +65,7 @@
  identiques. On suivra le même raisonnement pour la distance entre
  mots ou entre langages.
  \ss{Distances entre mots}
-  \subsubsection{Distance de Hamming}
+  \sss{Distance de Hamming}
   \[
   D_H(w, w') = \sum^{\mid{}w\mid}_{i = 1} \mathbbm{1}_{w[i] \neq w'[i]}
   \]
@@ -73,7 +73,7 @@
   Intuitivement, la distance de Hamming est le nombre de caractères qui
   diffèrent d'une chaîne à l'autre.
   \p exemple : $D_H($CHENES$,$ CHEVRE$)=3$
-  \subsubsection{Distance de Levenshtein (ou d'édition)}
+  \sss{Distance de Levenshtein (ou d'édition)}
   \p Soit 3 opérations :\\
   \bi
    \item supprimer un symbole;
@@ -86,7 +86,7 @@
   \]
   \p exemple : $D_L($CHENES$,$ CHEVRE$)=3$
   \sss{Extension à la distance de Hamming}
-  \p Par un doctorant du LINA : [2002 MANCHERON], STARS.
+  \p Par un ancien doctorant du LINA : [2002 MANCHERON], STARS.
   \p Cette distance est basée sur une similarité entre séquences :\\ \\
   \begin{tabular}{ l | l l l l }
    $w$  & $w_1$  & $w_2$  & ... & $w_N$  \\
