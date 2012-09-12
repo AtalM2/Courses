@@ -1,38 +1,11 @@
 \documentclass[a4paper,11pt]{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage[french]{babel}
-\usepackage{listings, float, graphicx, amsmath, hyperref, bbm}
-
-\setcounter{secnumdepth}{2}
-\newcommand{\sectionbreak}{\clearpage}
-\graphicspath{{./img/}}
-\DeclareGraphicsExtensions{.png}
-\renewcommand*\thesection{\arabic{section}}
-\hypersetup{
-    colorlinks,
-    citecolor=blue,
-    filecolor=blue,
-    linkcolor=blue,
-    urlcolor=blue
-}
-
-\renewcommand{\labelitemi}{---}
-\newcommand{\x}[1]{\texttt{#1}}
-\newcommand{\p}{\paragraph*{}}
-\newcommand{\bi}{\begin{itemize}}
-\newcommand{\ei}{\end{itemize}}
-\newcommand{\g}[1]{\textbf{#1}}
-\newcommand{\img}[3][1]{
- \begin{figure}[H]
-  \centering
-  \includegraphics[scale=#1]{#2}
-  \caption{#3}
- \end{figure}}
+\input{boilerplate.tex}
 
 \begin{document}
 \title{Cours $n^o$2 - Langages probabilistes}
-\date{}
+\author{Jérémie \textsc{Bourdon}}
+\date{2012}
 \maketitle
 \section{Sources de mots aléatoires}
  \p Une source de mots est un processus qui génère des suites de symboles sur un
