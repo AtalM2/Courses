@@ -9,19 +9,19 @@
 \author{Jérémie \textsc{Bourdon}}
 \date{2012}
 \maketitle
-\section{Concepts}
- \subsection{Alphabet}
-  \subsubsection{notation}
+\s{Concepts}
+ \ss{Alphabet}
+  \sss{notation}
   \p Pierre de base de toute étude, l'alphabet sera noté $\Sigma$, sa
   taille, ou cardinal, sera notée $\mid\Sigma\mid$.
-  \subsubsection{exemples}
+  \sss{exemples}
   \bi
    \item 26 lettres et l'espace;
    \item ASCII, ASCII étendu, Unicode;
    \item en bio informatique : 4 lettres (ADN/ARN), 20 lettres (protéines)
    \item TALN : dictionnaire (les éléments de l'alphabet seront alors des mots)
   \ei
-  \subsubsection{considérations sur la complexité}
+  \sss{considérations sur la complexité}
   \p Considérons le chiffre de César suivant :\\
   \bi
    \item A $\rightarrow$ E;
@@ -35,16 +35,16 @@
   d'excellents résultats. Si l'on considère maintenant le même code mais sur une
   table ASCII étendue, alors, avec les accents et la casse, cette même analyse se
   révèlera plus complexe à mettre en place.
- \subsection{Mot}
+ \ss{Mot}
  \p Un mot, ou séquence, est une suite finie de symboles de l'alphabet. L'ensemble
  de tous les mots possibles est noté $\Sigma^*$ avec :
  \[
  \Sigma^* = \bigcup^{\infty}_{i = 0} \Sigma^i
  \]
  où $\Sigma^i$ est l'ensemble des mots de longueur $i$.
- \subsection{Langage}
+ \ss{Langage}
  \p Un langage est un ensemble de mots (potentiellement infini mais dénombrable).
-\section{Comptage}
+\s{Comptage}
  \p Prenons comme exemple \x{Bonjour} :\\
  \bi
   \item \x{on} est un facteur de \x{Bonjour};
@@ -58,13 +58,13 @@
  instrusions informatiques : si l'on considère le langage des fichiers de logs
  dont les mots sont une phrase loggée, alors une intrusion se révèle par une
  sous-séquence particulière, d'où la nécessité de les rechercher rapidement.
-\section{Distances}
+\s{Distances}
  La notion de distance est assez intuitive, appliquée à deux objets
  dans l'espace, plus la distance est petite plus les objets sont
  proches et lorsque la distance est nulle on peut supposer qu'ils sont
  identiques. On suivra le même raisonnement pour la distance entre
  mots ou entre langages.
- \subsection{Distances entre mots}
+ \ss{Distances entre mots}
   \subsubsection{Distance de Hamming}
   \[
   D_H(w, w') = \sum^{\mid{}w\mid}_{i = 1} \mathbbm{1}_{w[i] \neq w'[i]}
@@ -85,7 +85,7 @@
   D_L(w, w') = \text{nombre minimal d'opérations pour passer de }w\text{ à }w'
   \]
   \p exemple : $D_L($CHENES$,$ CHEVRE$)=3$
-  \subsubsection{Extension à la distance de Hamming}
+  \sss{Extension à la distance de Hamming}
   \p Par un doctorant du LINA : [2002 MANCHERON], STARS.
   \p Cette distance est basée sur une similarité entre séquences :\\ \\
   \begin{tabular}{ l | l l l l }
@@ -106,7 +106,7 @@
   S(w, w') = \sum^k_{j = 1}\bigg(f_0(z_j) + f_1(u_j)\bigg) + f_0(z_0)
   \]
   \p Pour retomber sur Hamming on prend $f_0(n) = \mid{}n\mid$ et $f_1(n) = 0$.
-  \subsubsection{Noyau}
+  \sss{Noyau}
   Soit $F(w)$ l'ensemble des facteurs de $w$. Le noyau de $w$ et $w'$ est
   alors :
   \[
@@ -114,11 +114,11 @@
   \]
   \p exemple : Soit $w = bon$ et $w' = thon$ alors
   $N(w, w') = \{\epsilon, o, n, on\}$
- \subsection{Distance entre langages}
+ \ss{Distance entre langages}
  On remarquera que sans le support des statistiques, les outils
  permettant de mesurer la distance entre langages sont très peu
  pertinent.
-  \subsubsection{Distance de Jaccard}
+  \sss{Distance de Jaccard}
   Soit $A$ et $B$ deux langages (et donc deux ensembles), alors la distance de
   Jaccard entre ces deux langages est :
   \[
