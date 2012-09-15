@@ -1,0 +1,169 @@
+#+TITLE: Feuille de travaux dirigés n°1
+
+* Configuration et déploiement
+  
+** Exercice 1.1
+   
+*** 1
+    Écrire un fichier ~Makefile~ explicite pour compiler
+    l'application ~tetris~ décrite dans les fichiers suivants:
+    
+    #+LABEL: tetris.cpp
+    #+BEGIN_SRC cpp :tangle tetris.cpp
+      #include <iostream>
+      #include <cstdlib>
+      #include "tetris.h"
+      #include "graphics.h"
+      
+      int main(void) {
+          // code omis
+          return EXIT_SUCCESS;
+      }
+    #+END_SRC
+    
+    #+LABEL: tetris.h
+    #+BEGIN_SRC cpp :tangle tetris.h
+      #ifndef __tetris_h__
+      #define __tetris_h__
+      #include <iosfwd>
+      #include "common.h"
+      // code omis
+      #endif
+    #+END_SRC
+    
+    #+LABEL: common.h
+    #+BEGIN_SRC cpp :tangle common.h
+      #ifndef __common_h__
+      #define __common_h__
+      #include <vector>
+      #include <list>
+      // code omis
+      #endif
+    #+END_SRC
+    
+    #+LABEL: graphics.cpp
+    #+BEGIN_SRC cpp :tangle graphics.cpp
+      #include "common.h"
+      #include "graphics.h"
+      // code omis
+    #+END_SRC
+    
+    #+LABEL: graphics.h
+    #+BEGIN_SRC cpp :tangle graphics.h
+      #ifndef __graphics_h__
+      #define __graphics_h__
+      #include <X11/X.h>
+      // code omis
+      #endif
+    #+END_SRC
+    
+    On utilise la librairie graphique ~libX11.so~ du répertoire
+    ~/usr/lib/x86_64-linux-gnu/~;
+    
+    #+LABEL: Makefile
+    #+BEGIN_SRC makefile-gmake :tangle Makefile
+      CXX=g++
+      LDFLAGS=-L /usr/lib/x86_64-linux-gnu
+      
+      tetris: tetris.o graphics.o
+         $(CXX) -o tetris $(LDFLAGS) -lX11 tetris.o graphics.o
+      
+      tetris.o: tetris.cpp tetris.h graphics.h
+         $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c tetris.cpp -o tetris.o
+      
+      graphics.o: graphics.cpp graphics.h common.h
+         $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c graphics.cpp -o graphics.o
+      
+      tetris.h: common.h
+          @touch tetris.h
+    #+END_SRC
+    
+    Il faut bien faire attention à ce que l'indentation soit faite
+    avec des tabulations et pas des espaces, sinon make(1) renverra
+    l'erreur ~line X: missing separator~.
+    
+*** 2
+    Écrire un fichier ~Makefile~ utilisant les règles implicites pour
+    effectuer la même chose qu'à la question précédente.
+
+    #+LABEL: Makefile
+    #+BEGIN_SRC makefile-gmake :tangle Makefile
+      CXX=g++
+      LDFLAGS=-L /usr/lib/x86_64-linux-gnu -lX11 -lstdc++
+      
+      tetris: tetris.o graphics.o
+      tetris.o: tetris.cpp tetris.h graphics.h common.h
+      graphics.o: graphics.cpp graphics.h common.h
+    #+END_SRC
+
+    Attention, il ne faut pas oublier d'ajouter l'option ~-lstdc++~
+    au linker, via LDFLAGS, car le linker utilisé par la règle
+    implicite n'est pas ~g++~ mais ~gcc~.
+
+** Exercice 1.2
+
+   #+BEGIN_SRC makefile-gmake :tangle Makefile
+     file1.h file2.h file3.h file4.h: common.h
+     
+     file1.cpp: file1.h
+     file2.cpp: file2.h
+     file3.cpp: file3.h
+     file4.cpp: file4.h
+     
+     executable:file1.o file2.o file3.o file4.o
+   #+END_SRC
+
+*** 1
+    Que se passe t'il si l'on appelle la commande ~make~ sur ce
+    ~Makefile~ ?
+
+    Rien. Lorsqu'aucune règle n'est spécifiée, c'est la première qui
+    est exécutée, ici ~fileX.h ...: common.h~, et il n'existe aucune
+    règle de production, même implicite.
+
+*** 2
+    Que se passe t'il si l'on exécute la commande ~make executable~ ?
+
+    Réponse du professeur:
+    Le fichier ~executable~ est créé en combinant les fichier
+    ~fileX.cpp~.
+
+    Mais en réalité, lorsqu'aucun ~.o~ n'est présent avec le même nom
+    que la cible, par exemple ~executable~ et ~executable.o~ alors
+    ~make(1)~ compile tous les fichiers sources pour obtenir les
+    fichiers objets mais ne va rien faire pour obtenir la cible. Il
+    faut indiqué explicitement comme l'obtenir.
+
+    Un ~Makefile~ correct serait donc:
+
+    #+LABEL: Makefile
+    #+BEGIN_SRC makefile-gmake :tangle Makefile
+      file1.h file2.h file3.h file4.h: common.h
+      
+      file1.cpp: file1.h
+      file2.cpp: file2.h
+      file3.cpp: file3.h
+      file4.cpp: file4.h
+      
+      executable:file1.o file2.o file3.o file4.o
+          $(CXX) $(LDFLAGS) -o executable $^
+    #+END_SRC
+    
+
+*** 3
+    Que se passe t'il si l'on exécute la commande ~make executable~
+    après avoir modifié le fichier ~file2.h~ ?
+
+    Rien. ~make~ « voit » bien que le fichier ~file2.h~ a été
+    modifié, mais il n'existe aucune règle de production, même
+    implicite, entre ~file2.cpp~ et ~file2.h~. Comme ~file2.cpp~
+    n'est pas modifié, ~file2.o~ n'a pas besoin d'être reconstruit,
+    et de même pour ~executable~.
+
+    
+*** TODO 4
+    Réécrire le fichier ~Makefile~ sous une forme plus synthétique
+    pour qu'il fonctionne correctement. On fera aussi en sorte de
+    pouvoir ajouter facilement de nouveaux fichiers de la forme
+    ~filexx.cpp~ et ~filexx.h~ à l'application.
+
