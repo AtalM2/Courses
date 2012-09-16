@@ -119,7 +119,7 @@
    #+END_SRC
 
 *** 1
-    Que se passe t'il si l'on appelle la commande ~make~ sur ce
+    Que se passe-t-il si l'on appelle la commande ~make~ sur ce
     ~Makefile~ ?
 
     Rien. Lorsqu'aucune règle n'est spécifiée, c'est la première qui
@@ -127,17 +127,17 @@
     règle de production, même implicite.
 
 *** 2
-    Que se passe t'il si l'on exécute la commande ~make executable~ ?
+    Que se passe-t-il si l'on exécute la commande ~make executable~ ?
 
     Réponse du professeur:
-    Le fichier ~executable~ est créé en combinant les fichier
+    Le fichier ~executable~ est créé en combinant les fichiers
     ~fileX.cpp~.
 
     Mais en réalité, lorsqu'aucun ~.o~ n'est présent avec le même nom
     que la cible, par exemple ~executable~ et ~executable.o~ alors
     ~make(1)~ compile tous les fichiers sources pour obtenir les
     fichiers objets mais ne va rien faire pour obtenir la cible. Il
-    faut indiqué explicitement comme l'obtenir.
+    faut indiquer explicitement comme l'obtenir.
 
     Un ~Makefile~ correct serait donc:
 
@@ -157,8 +157,8 @@
     
 
 *** 3
-    Que se passe t'il si l'on exécute la commande ~make executable~
-    après avoir modifié le fichier ~file2.h~ ?
+    Que se passe-t-il si l'on exécute la commande ~make executable~
+    après avoir modifier le fichier ~file2.h~ ?
 
     Rien. ~make~ « voit » bien que le fichier ~file2.h~ a été
     modifié, mais il n'existe aucune règle de production, même
