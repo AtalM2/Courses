@@ -1,4 +1,9 @@
+# -*- org-export-latex-listings: minted; org-export-latex-minted-options: (("frame" "lines") ("fontsize" "\\scriptsize") ("linenos" "")); org-latex-to-pdf-process: ("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"); -*-
 #+TITLE: Feuille de travaux dirigés n°1
+#+AUTHOR:
+#+LATEX_CLASS: article
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{emacs}
 
 * Configuration et déploiement
   
@@ -7,9 +12,9 @@
 *** 1
     Écrire un fichier ~Makefile~ explicite pour compiler
     l'application ~tetris~ décrite dans les fichiers suivants:
-    
-    #+LABEL: tetris.cpp
+
     #+BEGIN_SRC cpp :tangle tetris.cpp
+      // tetris.cpp
       #include <iostream>
       #include <cstdlib>
       #include "tetris.h"
@@ -21,8 +26,8 @@
       }
     #+END_SRC
     
-    #+LABEL: tetris.h
     #+BEGIN_SRC cpp :tangle tetris.h
+      // tetris.h
       #ifndef __tetris_h__
       #define __tetris_h__
       #include <iosfwd>
@@ -31,8 +36,8 @@
       #endif
     #+END_SRC
     
-    #+LABEL: common.h
     #+BEGIN_SRC cpp :tangle common.h
+      // common.h
       #ifndef __common_h__
       #define __common_h__
       #include <vector>
@@ -41,15 +46,15 @@
       #endif
     #+END_SRC
     
-    #+LABEL: graphics.cpp
     #+BEGIN_SRC cpp :tangle graphics.cpp
+      // graphics.cpp
       #include "common.h"
       #include "graphics.h"
       // code omis
     #+END_SRC
     
-    #+LABEL: graphics.h
     #+BEGIN_SRC cpp :tangle graphics.h
+      // graphics.h
       #ifndef __graphics_h__
       #define __graphics_h__
       #include <X11/X.h>
@@ -60,8 +65,7 @@
     On utilise la librairie graphique ~libX11.so~ du répertoire
     ~/usr/lib/x86_64-linux-gnu/~;
     
-    #+LABEL: Makefile
-    #+BEGIN_SRC makefile-gmake :tangle Makefile
+    #+BEGIN_SRC makefile :tangle Makefile
       CXX=g++
       LDFLAGS=-L /usr/lib/x86_64-linux-gnu
       
@@ -86,8 +90,7 @@
     Écrire un fichier ~Makefile~ utilisant les règles implicites pour
     effectuer la même chose qu'à la question précédente.
 
-    #+LABEL: Makefile
-    #+BEGIN_SRC makefile-gmake :tangle Makefile
+    #+BEGIN_SRC makefile :tangle Makefile
       CXX=g++
       LDFLAGS=-L /usr/lib/x86_64-linux-gnu -lX11 -lstdc++
       
@@ -102,7 +105,9 @@
 
 ** Exercice 1.2
 
-   #+BEGIN_SRC makefile-gmake :tangle Makefile
+   #+BEGIN_SRC makefile :tangle Makefile
+     CXX=g++
+     
      file1.h file2.h file3.h file4.h: common.h
      
      file1.cpp: file1.h
@@ -136,8 +141,9 @@
 
     Un ~Makefile~ correct serait donc:
 
-    #+LABEL: Makefile
-    #+BEGIN_SRC makefile-gmake :tangle Makefile
+    #+BEGIN_SRC makefile :tangle Makefile
+      CXX=g++
+      
       file1.h file2.h file3.h file4.h: common.h
       
       file1.cpp: file1.h
