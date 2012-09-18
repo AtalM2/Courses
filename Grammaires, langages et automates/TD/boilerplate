@@ -1,0 +1,38 @@
+% Classic packages
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{listings, float, graphicx, amsmath, hyperref}
+
+% Useful tweaks
+\setcounter{secnumdepth}{0}
+\newcommand{\sectionbreak}{\clearpage}
+\graphicspath{{./img/}}
+\DeclareGraphicsExtensions{.png}
+\renewcommand*\thesection{\arabic{section}}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\renewcommand{\labelitemi}{---}
+
+% Some shortcuts because I'm lazy
+\newcommand{\x}[1]{\texttt{#1}}
+\newcommand{\p}{\paragraph*{}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\s}[1]{\section{#1}}
+% Replaces the german sharp S, so use with caution
+\let\germans\ss
+\renewcommand{\ss}[1]{\subsection{#1}}
+\newcommand{\sss}[1]{\subsubsection{#1}}
+\newcommand{\img}[3][1]{
+ \begin{figure}[H]
+  \centering
+  \includegraphics[scale=#1]{#2}
+  \caption{#3}
+ \end{figure}}
+

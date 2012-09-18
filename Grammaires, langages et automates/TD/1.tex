@@ -1,0 +1,113 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{bbm}
+
+\input{boilerplate}
+
+\begin{document}
+\title{TD $n^o$1 - Motifs et distances}
+\date{2012}
+\maketitle
+\s{Exercice 2}
+  \paragraph{Question 1} Les compter intuitivement est non trivial, par exemple,
+  en marquant d'un espace souligné chaque lettre utilisée dans la combinaison,
+  on a :\\ \\
+  \begin{tabular}{c c c c c c c c c c c c c c c c c c}
+  \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
+  \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
+  \x{A} & \x{B} & \x{R} & \x{A} \\
+  - & - &   &   &   &   &   &   & - &   & - &   &   &   &   &   &   &   \\ \hline
+  - & - &   &   &   &   &   &   & - &   &   &   & - &   &   &   &   &   \\ \hline
+  - & - &   &   &   &   &   &   & - &   &   &   &   &   & - &   &   &   \\ \hline
+  - & - &   &   &   &   &   &   & - &   &   &   &   &   &   &   &   & - \\ \hline
+  - & - &   &   &   &   &   &   &   &   &   &   &   &   &   & - &   & - \\ \hline
+  - &   &   &   &   &   &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
+    &   &   & - &   &   &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
+    &   &   &   &   & - &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
+    &   &   &   &   &   &   & - & - &   &   &   &   &   &   & - &   & - \\
+  \end{tabular}
+  \p Soit 9 occurrences en tout.
+  \paragraph{Question 2} La première ligne se calcule facilement (on part de 0
+  et on ajoute 1 à chaque fois que l'on croise un \x{A}). Les lignes suivantes
+  peuvent se calculer en fonction des valeurs précédentes comme détaillé
+  dans la question suivante.\\ \\
+  \begin{tabular}{|c|c c c c c c c c c c c c c c c c c c|} \hline
+  $_j\backslash ^i$ & \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
+                      \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
+                      \x{A} & \x{B} & \x{R} & \x{A} \\ \hline
+  \x{A} & 1 & 1 & 1 & 2 & 2 & 3 & 3 & 4 & 4 & 4 & 5 & 5 & 6 & 6 & 7 & 7 & 7 & 8 \\
+  \x{B} & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 12& 12& 12\\
+  \x{B} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 6 & 6 & 6 \\
+  \x{A} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 2 & 3 & 3 & 3 & 9 \\ \hline
+  \end{tabular}
+  \paragraph{Question 3} On peut constater assez rapidement ici que pour trouver
+  la valeur d'une case, il convient d'additionner la valeur de sa voisine
+  de gauche avec celle de sa voisine d'en haut à gauche quand les lettres du
+  motif et du texte coïncident, ou simplement de reporter la valeur de sa
+  voisine de gauche quand les lettres du motif et du texte ne coïncident pas.
+  Autrement dit :
+  \[
+  M(i, j) = \left\{
+  \begin{array}{l l}
+    M(i - 1, j - 1) + M(i - 1, j) & \quad \text{si }T[i]=w[j]\\
+    M(i - 1, j)                   & \quad \text{sinon}\\
+  \end{array} \right.
+  \]
+  \paragraph{Question 4} Étant donné que l'on remplit une matrice  de taille
+  $\mid T \mid \times \mid w \mid$ pour trouver la solution, la complexité de
+  cet algorithme est $\mathcal{O}(\mid T \mid \times \mid w \mid)$.
+  \paragraph{Question 5} Il faudrait, au lieu de stocker le nombre
+  d'occurrences de telle sous-séquence dans chaque préfixe du texte, stocker la
+  position de chacune des lettres composant ces occurrences dans un ensemble
+  afin de pouvoir les restituer à la fin.
+  \p Cela donnerait, pour commencer (avec le tiret signifiant valeur identique
+  à la case de gauche):\\ \\
+  \begin{tabular}{|c|c c c c c c c |} \hline
+  $_j\backslash ^i$ & \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & $\cdots$ \\ \hline
+  \x{A}
+   & $\{1\}$
+    & -
+     & -
+      & $\{1, 4\}$
+       & -
+        & $\{1, 4, 6\}$
+         & $\cdots$ \\
+  \x{B}
+   & $\emptyset$
+    & $\{(1,2)\}$
+     & -
+      & -
+       & -
+        & -
+         & $\cdots$ \\
+  \x{B}
+   & $\emptyset$
+    & -
+     & -
+      & -
+       & -
+        & -
+         & $\cdots$ \\
+  \x{A}
+   & $\emptyset$
+    & -
+     & -
+      & -
+       & -
+        & -
+         & $\cdots$ \\ \hline
+  \end{tabular}
+  \p Il est important de noter que la complexité de l'algorithme explose. En effet,
+  le nombre d'occurrences de sous-séquences $w$ dans un texte $T$ peut atteindre
+  $2^{\mid w \mid}$ : le nombre de sous-séquences de taille $k$ d'un
+  mot de taille $n$ est analogue au nombre de parties de taille $k$ d'un
+  ensemble de cardinal $n$. Ce nombre est $\binom{n}{k}$.
+  \p Or si on prend $w' = \x{aaaaa}$ et $T' = w'$, on calcule toutes les
+  sous-séquences de taille inférieure ou égale à celles qui nous intéressent. On
+  se retrouve donc avec
+  $\sum_{i = 1}^{\mid w' \mid}\binom{\mid T' \mid}{\mid w' \mid}$
+  sous-séquences, ou $2^{\mid w' \mid} - 1$ (nombre de parties d'un ensemble ou
+  formule du binôme).
+  \p L'explosion de la complexité est donc même exponentielle.
+  
+ \end{document}
