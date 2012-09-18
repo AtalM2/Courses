@@ -47,11 +47,11 @@
   voisine de gauche quand les lettres du motif et du texte ne coïncident pas.
   Autrement dit :
   \[
-  M(i, j) = \left\{
-  \begin{array}{l l}
+  M(i, j) =
+  \begin{cases}
     M(i - 1, j - 1) + M(i - 1, j) & \quad \text{si }T[i]=w[j]\\
-    M(i - 1, j)                   & \quad \text{sinon}\\
-  \end{array} \right.
+    M(i - 1, j)                   & \quad \text{sinon}
+  \end{cases}
   \]
   \paragraph{Question 4} Étant donné que l'on remplit une matrice  de taille
   $\mid T \mid \times \mid w \mid$ pour trouver la solution, la complexité de
@@ -109,5 +109,35 @@
   sous-séquences, ou $2^{\mid w' \mid} - 1$ (nombre de parties d'un ensemble ou
   formule du binôme).
   \p L'explosion de la complexité est donc même exponentielle.
-  
- \end{document}
+\s{Exercice 4}
+  \paragraph{Question 1} Soit $w = \x{CHIEN}$ et $w' = \x{NICHE}$, la matrice
+  des $d(i, j)$ est :
+  \\ \\
+  \begin{tabular}{|c|cccccc|}
+  \hline
+  $_j\backslash ^i$ & $\epsilon$ & \x{C} & \x{H} & \x{I} & \x{E} & \x{N} \\
+  \hline
+  $\epsilon$        & 0          & 1     & 2     & 3     & 4     & 5     \\
+  \x{N}             & 1          & 1     & 2     & 3     & 4     & 4     \\
+  \x{I}             & 2          & 2     & 2     & 2     & 3     & 4     \\
+  \x{C}             & 3          & 2     & 3     & 3     & 3     & 4     \\
+  \x{H}             & 4          & 3     & 2     & 3     & 4     & 5     \\
+  \x{E}             & 5          & 4     & 3     & 3     & 3     & 4     \\
+  \hline
+  \end{tabular}
+  \p Pour répondre plus précisément à la question, on a donc
+  $\forall j, d(0, j) = j$ et $\forall i, d(i, 0) = i$.
+  \paragraph{Question 2} Posons $ajout = d(i - 1, j) + 1$,
+  $suppression = d(i, j - 1) + 1$ et
+  $modification = d(i - 1, j - 1) + \mathbbm{1}_{w[i]\neq w'[j]}$. Alors on a :
+  \[
+  d(i, j) = min(suppression, ajout, modification)
+  \]
+  \paragraph{Question 3} Un algorithme efficace remplit simplement la matrice
+  des $d(i, j)$ en combinant la question 1 pour le cas de base et la question 2
+  pour l'hérédité et retourne la valeur $d(\mid w \mid, \mid w' \mid)$ comme
+  résultat.
+  \paragraph{Question 4} De la même manière que pour la question 4 de l'exercice
+  2, la complexité de cet algorithme est
+  $\mathcal{O}(\mid w \mid \times \mid w' \mid)$
+\end{document}
