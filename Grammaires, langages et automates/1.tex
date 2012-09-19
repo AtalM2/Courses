@@ -72,7 +72,7 @@
   \p Il faut en prérequis que $w$ et $w'$ fassent la même longueur.
   Intuitivement, la distance de Hamming est le nombre de caractères qui
   diffèrent d'une chaîne à l'autre.
-  \p exemple : $D_H($CHENES$,$ CHEVRE$)=3$
+  \p exemple : $D_H(\x{CHENES},\x{CHEVRE})=3$
   \sss{Distance de Levenshtein (ou d'édition)}
   \p Soit 3 opérations :\\
   \bi
@@ -84,7 +84,7 @@
   \[
   D_L(w, w') = \text{nombre minimal d'opérations pour passer de }w\text{ à }w'
   \]
-  \p exemple : $D_L($CHENES$,$ CHEVRE$)=3$
+  \p exemple : $D_L(\x{CHENES},\x{CHEVRE})=3$
   \sss{Extension à la distance de Hamming}
   \p Par un ancien doctorant du LINA : [2002 MANCHERON], STARS.
   \p Cette distance est basée sur une similarité entre séquences :\\ \\
@@ -96,21 +96,11 @@
   \p où $w$ et $w'$ sont les mots à comparer et où
   $s_i=\mathbbm{1}_{w[i] = w'[i]}$
   \p $s$ s'écrit :
-  \begin{tabular}{ c c c c c c }
-   $\underbrace{0...0}$ &
-   $\underbrace{1...1}$ &
-   $\underbrace{0...0}$ &
-   $...$                &
-   $\underbrace{1...1}$ &
-   $\underbrace{0...0}$ \\
-   $z_0$                &
-   $u_1$                &
-   $z_1$                &
-                        &
-   $u_k$                &
-   $z_k$                \\
-  \end{tabular}
-  \p Deux fonctions, $f_0(n)$ et $f_1(n)$ servent à pondérer les séquences de
+  \[
+  \underbrace{0...0}_{z_0}\underbrace{1...1}_{u_1}\underbrace{0...0}_{z_1}
+   ...\underbrace{1...1}_{u_k}\underbrace{0...0}_{z_k}
+  \]
+  \p Deux fonctions, $f_0$ et $f_1$ servent à pondérer les séquences de
   $0$ et de $1$. La similarité s'exprime alors :
   \[
   S(w, w') = \sum^k_{j = 1}\bigg(f_0(z_j) + f_1(u_j)\bigg) + f_0(z_0)
