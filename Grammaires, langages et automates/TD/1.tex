@@ -87,7 +87,22 @@
   \[
   \sum^m_{j = 1}\binom{n}{j}
   \]
-  
+  \p Or
+  \[
+  \begin{split}
+  \binom{n}{m} & = \frac{n!}{(n - m)!m!}\\
+               &                        \\
+               & = \frac
+                    {\overbrace{n(n - 1)...(n - m + 1)}^
+                     {\text{m facteurs avoisinant n}}}
+                    {\underbrace{m!}_
+                     {\text{une constante quand }m\text{ est fixé}}}
+  \end{split}
+  \]
+  \p Donc sans même tenir compte des deux boucles imbriquées et d'après cette
+  dernière expression, on voit bien que la complexité temporelle
+  va être de $\mathcal{O}(\abs{n}^{\abs{m}})$ (les deux boucles ne modifient pas
+  cette valeur).
 \s{Exercice 4}
   \paragraph{Question 1} Soit $w = \x{CHIEN}$ et $w' = \x{NICHE}$, la matrice
   des $d(i, j)$ est :
