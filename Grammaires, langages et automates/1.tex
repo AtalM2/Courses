@@ -13,7 +13,7 @@
  \ss{Alphabet}
   \sss{notation}
   \p Pierre de base de toute étude, l'alphabet sera noté $\Sigma$, sa
-  taille, ou cardinal, sera notée $\mid\Sigma\mid$.
+  taille, ou cardinal, sera notée $\abs{\Sigma}$.
   \sss{exemples}
   \bi
    \item 26 lettres et l'espace;
@@ -67,7 +67,7 @@
  \ss{Distances entre mots}
   \sss{Distance de Hamming}
   \[
-  D_H(w, w') = \sum^{\mid{}w\mid}_{i = 1} \mathbbm{1}_{w[i] \neq w'[i]}
+  D_H(w, w') = \sum^{\abs{w}}_{i = 1} \mathbbm{1}_{w[i] \neq w'[i]}
   \]
   \p Il faut en prérequis que $w$ et $w'$ fassent la même longueur.
   Intuitivement, la distance de Hamming est le nombre de caractères qui
@@ -105,7 +105,7 @@
   \[
   S(w, w') = \sum^k_{j = 1}\bigg(f_0(z_j) + f_1(u_j)\bigg) + f_0(z_0)
   \]
-  \p Pour retomber sur Hamming on prend $f_0(n) = \mid{}n\mid$ et $f_1(n) = 0$.
+  \p Pour retomber sur Hamming on prend $f_0(n) = \abs{n}$ et $f_1(n) = 0$.
   \sss{Noyau}
   Soit $F(w)$ l'ensemble des facteurs de $w$. Le noyau de $w$ et $w'$ est
   alors :
@@ -122,7 +122,7 @@
   Soit $A$ et $B$ deux langages (et donc deux ensembles), alors la distance de
   Jaccard entre ces deux langages est :
   \[
-  D_j(A, B) = \frac{\mid A \cup B \mid - \mid A \cap B \mid}{\mid A \cup B \mid}
+  D_j(A, B) = \frac{\abs{A \cup B} - \abs{A \cap B}}{\abs{A \cup B}}
   \]
   \p exemple : soit $L_1 = \{1, 2, 3, 4, 5, 6, 7, 8, 9\}$ et
   $L_2 = \{6, 7, 8, 9, 10, 11, 12, 13, 14\}$. Alors :

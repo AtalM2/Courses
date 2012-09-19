@@ -19,6 +19,7 @@
 \renewcommand{\labelitemi}{---}
 
 % Some shortcuts because I'm lazy
+\newcommand{\abs}[1]{\lvert#1\rvert}
 \newcommand{\x}[1]{\texttt{#1}}
 \newcommand{\p}{\paragraph*{}}
 \newcommand{\bi}{\begin{itemize}}

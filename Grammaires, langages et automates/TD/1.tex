@@ -11,33 +11,31 @@
 \s{Exercice 2}
   \paragraph{Question 1} Les compter intuitivement est non trivial, par exemple,
   en marquant d'un tiret chaque lettre utilisée dans la combinaison, on a :\\ \\
-  \begin{tabular}{c c c c c c c c c c c c c c c c c c}
-  \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
-  \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
-  \x{A} & \x{B} & \x{R} & \x{A} \\
-  - & - &   &   &   &   &   &   & - &   & - &   &   &   &   &   &   &   \\ \hline
-  - & - &   &   &   &   &   &   & - &   &   &   & - &   &   &   &   &   \\ \hline
-  - & - &   &   &   &   &   &   & - &   &   &   &   &   & - &   &   &   \\ \hline
-  - & - &   &   &   &   &   &   & - &   &   &   &   &   &   &   &   & - \\ \hline
-  - & - &   &   &   &   &   &   &   &   &   &   &   &   &   & - &   & - \\ \hline
-  - &   &   &   &   &   &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
-    &   &   & - &   &   &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
-    &   &   &   &   & - &   &   & - &   &   &   &   &   &   & - &   & - \\ \hline
-    &   &   &   &   &   &   & - & - &   &   &   &   &   &   & - &   & - \\
+  \begin{tabular}{*{18}{c}}
+  \x{A}&\x{B}&\x{R}&\x{A}&\x{C}&\x{A}&\x{D}&\x{A}&\x{B}&\x{R}&\x{A}&\x{C}&\x{A}&
+  \x{D}&\x{A}&\x{B}&\x{R}&\x{A}\\ \hline \hline
+  -&-&& && && &-&&-&& && & && \\ \hline
+  -&-&& && && &-&& &&-&& & && \\ \hline
+  -&-&& && && &-&& && &&-& && \\ \hline
+  -&-&& && && &-&& && && & &&-\\ \hline
+  -&-&& && && & && && && &-&&-\\ \hline
+  -& && && && &-&& && && &-&&-\\ \hline
+   & &&-&& && &-&& && && &-&&-\\ \hline
+   & && &&-&& &-&& && && &-&&-\\ \hline
+   & && && &&-&-&& && && &-&&-\\
   \end{tabular}
   \p Soit 9 occurrences en tout.
   \paragraph{Question 2} La première ligne se calcule facilement (on part de 0
   et on ajoute 1 à chaque fois que l'on croise un \x{A}). Les lignes suivantes
   peuvent se calculer en fonction des valeurs précédentes comme détaillé
   dans la question suivante.\\ \\
-  \begin{tabular}{|c|c c c c c c c c c c c c c c c c c c|} \hline
-  $_j\backslash ^i$ & \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
-                      \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & \x{D} &
-                      \x{A} & \x{B} & \x{R} & \x{A} \\ \hline
-  \x{A} & 1 & 1 & 1 & 2 & 2 & 3 & 3 & 4 & 4 & 4 & 5 & 5 & 6 & 6 & 7 & 7 & 7 & 8 \\
-  \x{B} & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 12& 12& 12\\
-  \x{B} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 6 & 6 & 6 \\
-  \x{A} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 2 & 3 & 3 & 3 & 9 \\ \hline
+  \begin{tabular}{|c|*{18}{c}|} \hline
+  $_j\backslash ^i$&\x{A}&\x{B}&\x{R}&\x{A}&\x{C}&\x{A}&\x{D}&\x{A}&\x{B}&\x{R}
+                   &\x{A}&\x{C}&\x{A}&\x{D}&\x{A}&\x{B}&\x{R}&\x{A}\\ \hline
+  \x{A}&1&1&1&2&2&3&3&4&4&4&5&5&6&6&7&7 &7 & 8 \\
+  \x{B}&0&1&1&1&1&1&1&1&5&5&5&5&5&5&5&12&12& 12\\
+  \x{B}&0&0&0&0&0&0&0&0&1&1&1&1&1&1&1&6 &6 & 6 \\
+  \x{A}&0&0&0&0&0&0&0&0&0&0&1&1&2&2&3&3 &3 & 9 \\ \hline
   \end{tabular}
   \paragraph{Question 3} On peut constater assez rapidement ici que pour trouver
   la valeur d'une case, il convient d'additionner la valeur de sa voisine
@@ -53,75 +51,57 @@
   \end{cases}
   \]
   \paragraph{Question 4} Étant donné que l'on remplit une matrice  de taille
-  $\mid T \mid \times \mid w \mid$ pour trouver la solution, la complexité de
-  cet algorithme est $\mathcal{O}(\mid T \mid \times \mid w \mid)$.
+  $\abs{T} \times \abs{w}$ pour trouver la solution, la complexité de cet
+  algorithme est $\mathcal{O}(\abs{T} \times \abs{w})$.
   \paragraph{Question 5} Il faudrait, au lieu de stocker le nombre
   d'occurrences de telle sous-séquence dans chaque préfixe du texte, stocker la
   position de chacune des lettres composant ces occurrences dans un ensemble
   afin de pouvoir les restituer à la fin.
   \p Cela donnerait, pour commencer (avec le tiret signifiant valeur identique
   à la case de gauche):\\ \\
-  \begin{tabular}{|c|c c c c c c c |} \hline
-  $_j\backslash ^i$ & \x{A} & \x{B} & \x{R} & \x{A} & \x{C} & \x{A} & $\cdots$ \\ \hline
-  \x{A}
-   & $\{1\}$
-    & -
-     & -
-      & $\{1, 4\}$
-       & -
-        & $\{1, 4, 6\}$
-         & $\cdots$ \\
-  \x{B}
-   & $\emptyset$
-    & $\{(1,2)\}$
-     & -
-      & -
-       & -
-        & -
-         & $\cdots$ \\
-  \x{B}
-   & $\emptyset$
-    & -
-     & -
-      & -
-       & -
-        & -
-         & $\cdots$ \\
-  \x{A}
-   & $\emptyset$
-    & -
-     & -
-      & -
-       & -
-        & -
-         & $\cdots$ \\ \hline
+  \begin{tabular}{|c|*{6}{c}|}
+  \hline
+  $_j\backslash ^i$&\x{A}      &\x{B}      &\x{R}&\x{A}     &\x{C}&\x{A}
+  \\ \hline
+  \x{A}            &$\{1\}$    &-          &-    &$\{1, 4\}$&-    &$\{1, 4, 6\}$
+  \\
+  \x{B}            &$\emptyset$&$\{(1,2)\}$&-    &-         &-    &-
+  \\
+  \x{B}            &$\emptyset$&-          &-    &-         &-    &-
+  \\
+  \x{A}            &$\emptyset$&-          &-    &-         &-    &-
+  \\ \hline
   \end{tabular}
-  \p Il est important de noter que la complexité de l'algorithme explose. En effet,
-  le nombre d'occurrences de sous-séquences $w$ dans un texte $T$ peut atteindre
-  $2^{\mid w \mid}$ : le nombre de sous-séquences de taille $k$ d'un
-  mot de taille $n$ est analogue au nombre de parties de taille $k$ d'un
-  ensemble de cardinal $n$. Ce nombre est $\binom{n}{k}$.
-  \p Or si on prend $w' = \x{aaaaa}$ et $T' = w'$, on calcule toutes les
-  sous-séquences de taille inférieure ou égale à celles qui nous intéressent. On
-  se retrouve donc avec
-  $\sum_{i = 1}^{\mid w' \mid}\binom{\mid T' \mid}{\mid w' \mid}$
-  sous-séquences, ou $2^{\mid w' \mid} - 1$ (nombre de parties d'un ensemble ou
-  formule du binôme).
-  \p L'explosion de la complexité est donc même exponentielle.
+  \p Il est important de noter que la complexité de l'algorithme explose. Pour
+  le constater, prenons $a \in \Sigma, w = a^m$ et $T = a^n$. Alors le nombre
+  de sous-séquences présentes pour un élément $M(i, j)$ de la matrice $M$ de
+  calcul est $\binom{i}{j}$ (car toutes les sous-séquences possibles de taille
+  correcte sont retenues, ce qui revient donc à choisir $j$ caractères parmi $i$
+  disponibles).
+  \p Ensuite, on peut considérer que le nombre de sous-séquences calculées est
+  \[
+  \sum_{i = 1}^n\left(\sum^m_{j = 1}\binom{i}{j}\right)
+  \]
+  \p Ou, si l'on admet une optimisation basique (ne pas recalculer les séquences
+  déjà calculées précédemment sur une ligne)
+  \[
+  \sum^m_{j = 1}\binom{n}{j}
+  \]
+  
 \s{Exercice 4}
   \paragraph{Question 1} Soit $w = \x{CHIEN}$ et $w' = \x{NICHE}$, la matrice
   des $d(i, j)$ est :
   \\ \\
-  \begin{tabular}{|c|cccccc|}
+  \begin{tabular}{|c|*{6}{c}|}
   \hline
-  $_j\backslash ^i$ & $\epsilon$ & \x{C} & \x{H} & \x{I} & \x{E} & \x{N} \\
+  $_j\backslash ^i$&$\epsilon$&\x{C}&\x{H}&\x{I}&\x{E}&\x{N}\\
   \hline
-  $\epsilon$        & 0          & 1     & 2     & 3     & 4     & 5     \\
-  \x{N}             & 1          & 1     & 2     & 3     & 4     & 4     \\
-  \x{I}             & 2          & 2     & 2     & 2     & 3     & 4     \\
-  \x{C}             & 3          & 2     & 3     & 3     & 3     & 4     \\
-  \x{H}             & 4          & 3     & 2     & 3     & 4     & 5     \\
-  \x{E}             & 5          & 4     & 3     & 3     & 3     & 4     \\
+  $\epsilon$       &0         &1    &2    &3    &4    &5    \\
+  \x{N}            &1         &1    &2    &3    &4    &4    \\
+  \x{I}            &2         &2    &2    &2    &3    &4    \\
+  \x{C}            &3         &2    &3    &3    &3    &4    \\
+  \x{H}            &4         &3    &2    &3    &4    &5    \\
+  \x{E}            &5         &4    &3    &3    &3    &4    \\
   \hline
   \end{tabular}
   \p Pour répondre plus précisément à la question, on a donc
@@ -134,9 +114,9 @@
   \]
   \paragraph{Question 3} Un algorithme efficace remplit simplement la matrice
   des $d(i, j)$ en combinant la question 1 pour le cas de base et la question 2
-  pour l'hérédité et retourne la valeur $d(\mid w \mid, \mid w' \mid)$ comme
+  pour l'hérédité et retourne la valeur $d(\abs{w}, \abs{w'})$ comme
   résultat.
   \paragraph{Question 4} De la même manière que pour la question 4 de l'exercice
   2, la complexité de cet algorithme est
-  $\mathcal{O}(\mid w \mid \times \mid w' \mid)$
+  $\mathcal{O}(\abs{w} \times \abs{w'})$
 \end{document}
