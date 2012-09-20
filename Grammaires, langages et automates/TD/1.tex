@@ -8,6 +8,16 @@
 \title{TD $n^o$1 - Motifs et distances}
 \date{2012}
 \maketitle
+\s{Exercice 1}
+  \paragraph{Question 1}
+  La complexité de l'algorithme naïf est $\mathcal{O}(nm)$
+  (deux boucles imbriquées). Si l'on considère que $m$ est fixé, cette
+  complexité est simplement $\mathcal{O}(n)$.
+  \paragraph{Question 2}
+   \subparagraph{a} $\mathcal{C} = \{\epsilon, A, ABRA, ABRACADABRA\}$
+   \subparagraph{b} Pour cette question et la suite de l'exercice (fin de la
+   question 2 et questions 3 4 5), voir chapitre 10 du livre {\em Éléments
+   d'algorithmique}.
 \s{Exercice 2}
   \paragraph{Question 1} Les compter intuitivement est non trivial, par exemple,
   en marquant d'un tiret chaque lettre utilisée dans la combinaison, on a :\\ \\
@@ -101,8 +111,19 @@
   \]
   \p Donc sans même tenir compte des deux boucles imbriquées et d'après cette
   dernière expression, on voit bien que la complexité temporelle
-  va être de $\mathcal{O}(\abs{n}^{\abs{m}})$ (les deux boucles ne modifient pas
-  cette valeur).
+  va être de $\mathcal{O}(n^m)$ (la boucle de taille fixe ne
+  modifie pas cette valeur).
+  \p Si l'on suppose qu'aucun choix judicieux n'est fait pour la structure de
+  données, voici le nombre de séquences que l'on stockera
+  \[
+  \sum_{i = 1}^n\left(j\sum^m_{j = 1}\binom{i}{j}\right)
+  \]
+  (on multiplie par j car une sous-séquence est représentée par j positions de
+  lettres)
+  \p Ce nombre résulte en la complexité spatiale suivante (pour la même raison
+  que la complexité temporelle sauf que cette fois la boucle extérieure est
+  prise en compte) : $\mathcal{O}(n^{m + 1})$
+
 \s{Exercice 4}
   \paragraph{Question 1} Soit $w = \x{CHIEN}$ et $w' = \x{NICHE}$, la matrice
   des $d(i, j)$ est :
