@@ -7,10 +7,57 @@
 \author{Jérémie \textsc{Bourdon}}
 \date{2012}
 \maketitle
-\s{Sources de mots aléatoires}
+\s{Rappels sur les sources de mots}
  \p Une source de mots est un processus qui génère des suites de symboles sur un
- alphabet fixé.
+ alphabet fixé (et donc construit des mots).
  \p exemple : un algo qui génère des traces à l'exécution.
  \p Lorsque le processus est aléatoire on parle de source aléatoire de mots.
  \p exemple : pile ou face.
+ \p Une source probabiliste quant à elle est une source de mots telle que :
+ \[
+ \forall n \geq 0, \sum_{w \in \Sigma^n}p_w = 1
+ \]
+ \p Ces sources de mots définissent une distribution de probabilités sur
+ l'ensemble $\Sigma^n$.
+ \p Sources classiques : mécanisme fini permettant de modéliser (générer) cette
+ distribution.
+ \p On peut dessiner ce processus.
+\s{Rappels sur les automates}
+ \p Un automate est défini par un 5-uplet
+ $(\Sigma, \mathcal{Q}, \mathcal{I}, \mathcal{F}, \delta)$ où :\\
+ \bi
+  \item $\Sigma$ est un alphabet
+  \item $\mathcal{Q}$ est un ensemble d'états
+  \item $\mathcal{I}$ est un ensemble d'états initiaux
+  ($\mathcal{I} \subseteq \mathcal{Q}$)(ou l'état
+  initial, cela dépend des définitions, dans ce cas $\mathcal{I} \in \mathcal{Q}$)
+  \item $\mathcal{F}$ est un ensemble d'états finaux
+  ($\mathcal{F} \subseteq \mathcal{Q}$)
+  \item $\delta$ est une fonction de transition définie comme suit :
+  \[
+  \begin{array}{llll}
+   \delta : & \mathcal{Q} \times \Sigma & \to     & \mathcal{Q} \\
+            & (q, s)                    & \mapsto & q'\text{ si il y a une
+              transition par }s\text{ de }q\text{ à }q'
+  \end{array}
+  \]
+ \ei
+  \p Un automate fini déterministe (AFD, ou DFA en anglais) a un nombre fini
+  d'états et respecte les contraintes suivantes :
+  \bi
+   \item il y a un seul état initial
+   \item $\forall s \in \Sigma, \forall (q, q', q'') \in \mathcal{Q}^3,
+   \delta(q, s) = q' \land \delta(q, s) = q'' \implies q' = q''$
+  \ei
+  \p Un automate fini non déterministe (AFN, ou NFA en anglais) a un nombre fini
+  d'états mais ne respecte pas forcément les contraintes des DFA.
+  \p Notons :
+  \[
+  \begin{array}{l}
+  \mathcal{A}_{FD} = \{\text{langages reconnus par un AFD}\} \\
+  \mathcal{A}_{FN} = \{\text{langages reconnus par un AFN}\}
+  \end{array}
+  \]
+  \p Alors on a $\mathcal{A}_{FD} = \mathcal{A}_{FN}$.
+ 
 \end{document}
