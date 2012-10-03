@@ -1,0 +1,92 @@
+
+* Modélisation d'une bibliothèque
+
+  
+** Use case : Emprunt d'un exemplaire
+
+    - Objectif :: Permettre à un abonné d'emprunter un exemplaire.
+    - Portée :: Bibliothèque.
+    - Niveau :: Principal.
+    - Auteur principal :: Abonné.
+    - Priorité :: Haute.
+    - Fréquence :: Plusieurs fois par jour.
+
+*** Pré Condition :
+    - Le livre est présent dans la bibliothèque.
+    - Un exemplaire est disponible.
+    - L'emprunteur doit être abonné.
+    - L'emprunteur ne doit pas avoir dépassé son quota d'emprunt.
+
+*** Post Condition :
+    - L'exemplaire n'est plus disponible
+
+*** Scénario optimal :
+    1. l'abonné choisi un exemplaire;
+    2. l'abonné s'identifie auprès du bibliothécaire;
+    3. le bibliothécaire enregistre l'emprunt;
+    4. le bibliothécaire spécifie une date de retour;
+    5. l'abonné part avec l'exemplaire.
+
+*** Extensions :
+    3a. l'abonné n'a pas le droit d'emprunter.
+
+*** Diagramme de classes
+
+    #+BEGIN_SRC plantuml :file class_diagram.png
+      
+      package "Bibliothèque" {
+      
+      class Livre {
+      String titre
+      String auteur
+      }
+      
+      class Emprunt {
+      Date debut
+      Date fin
+      }
+      
+      Livre -right- "*" Exemplaire
+      Exemplaire "1" -up- "*" Emprunt
+      Emprunt "*" -left- "1" Abonné
+      
+      Exemplaire -- ÉtatsTransitions
+      
+      package ÉtatsTransitions {
+      class Disponible << (S, cyan) >>
+      class Indisponible << (S, cyan) >>
+      Disponible --> Indisponible
+      Disponible <-- Indisponible
+      }      
+      
+      }
+      
+      
+    #+END_SRC
+
+    #+RESULTS:
+    [[file:class_diagram.png]]
+
+*** Diagramme d'instance
+
+    #+BEGIN_SRC plantuml :file instance_diagram.png
+      
+      class Emprunt {
+      Date date
+      }
+      
+      class Exemplaire {
+      etat = { disponible || indisponible }
+      }
+      
+      Bibliothèque -down- "présent"Livre
+      Bibliothèque -down- "abonné"Nico
+      Livre -down- Exemplaire
+      Nico -down- Emprunt
+      Exemplaire -right- Emprunt
+      
+    #+END_SRC
+
+    #+RESULTS:
+    [[file:instance_diagram.png]]
+
