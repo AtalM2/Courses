@@ -32,9 +32,11 @@
 
 *** Diagramme de classes
 
-    #+BEGIN_SRC plantuml :file class_diagram.png
+**** Diagramme de classes de base
+    #+NAME: class_diagram_base
+    #+BEGIN_SRC plantuml :file class_diagram_base.png
       
-      package "Bibliothèque" {
+      package "Système" {
       
       class Livre {
       String titre
@@ -45,6 +47,9 @@
       Date debut
       Date fin
       }
+      
+      Bibliothèque -right- "*" Abonné
+      Bibliothèque -- "*" Livre
       
       Livre -right- "*" Exemplaire
       Exemplaire "1" -up- "*" Emprunt
@@ -61,11 +66,157 @@
       
       }
       
-      
     #+END_SRC
 
-    #+RESULTS:
-    [[file:class_diagram.png]]
+    #+RESULTS: class_diagram_base
+    [[file:class_diagram_base.png]]
+
+**** Diagramme de classes v1
+
+     Ceci est la première solution possible pour résoudre le problème
+     posé par les sections.
+     
+     #+NAME: class_diagram_1
+     #+BEGIN_SRC plantuml :file class_diagram_1.png
+       
+       package "Système" {
+       
+       class Section {
+       String nom
+       }
+       
+       Bibliothèque -down- "3" Section
+       Section "1" -down- "*" Livre
+       
+       class Livre {
+       String titre
+       String auteur
+       }
+       
+       class Emprunt {
+       Date debut
+       Date fin
+       }
+       
+       Bibliothèque -right- "*" Abonné
+       Bibliothèque -- "*" Livre
+       
+       Livre -right- "*" Exemplaire
+       Exemplaire "1" -up- "*" Emprunt
+       Emprunt "*" -left- "1" Abonné
+       
+       Exemplaire -- ÉtatsTransitions
+       
+       package ÉtatsTransitions {
+       class Disponible << (S, cyan) >>
+       class Indisponible << (S, cyan) >>
+       Disponible --> Indisponible
+       Disponible <-- Indisponible
+       }      
+       
+       }
+           
+    #+END_SRC
+     
+     #+RESULTS: class_diagram_1
+     [[file:class_diagram_1.png]]
+
+**** Diagramme de classes v2
+
+     Ceci est la deuxième solution possible pour résoudre le problème
+     posé par les sections.
+
+     #+NAME: class_diagram_2
+     #+BEGIN_SRC plantuml :file class_diagram_2.png
+       
+       package "Système" {
+       
+       enum Section {
+       adulte
+       adolescent
+       enfant
+       }
+       
+       Livre -down- Section
+       
+       class Livre {
+       String titre
+       String auteur
+       Section section
+       }
+       
+       class Emprunt {
+       Date debut
+       Date fin
+       }
+       
+       Bibliothèque -right- "*" Abonné
+       Bibliothèque -- "*" Livre
+       
+       Livre -right- "*" Exemplaire
+       Exemplaire "1" -up- "*" Emprunt
+       Emprunt "*" -left- "1" Abonné
+       
+       Exemplaire -- ÉtatsTransitions
+       
+       package ÉtatsTransitions {
+       class Disponible << (S, cyan) >>
+       class Indisponible << (S, cyan) >>
+       Disponible --> Indisponible
+       Disponible <-- Indisponible
+       }      
+       
+       }
+           
+    #+END_SRC
+
+     #+RESULTS: class_diagram_2
+     [[file:class_diagram_2.png]]
+
+**** Diagramme de classe v3
+
+     Ceci est la troisième solution possible pour résoudre le problème
+     posé par les sections.
+     
+     #+NAME: class_diagram_3
+     #+BEGIN_SRC plantuml :file class_diagram_3.png
+       
+       package "Système" {
+       
+       Bibliothèque -down- "*" Livre : < adulte, adolescent, enfant
+       
+       class Livre {
+       String titre
+       String auteur
+       }
+       
+       class Emprunt {
+       Date debut
+       Date fin
+       }
+       
+       Bibliothèque -right- "*" Abonné
+       Bibliothèque -- "*" Livre
+       
+       Livre -right- "*" Exemplaire
+       Exemplaire "1" -up- "*" Emprunt
+       Emprunt "*" -left- "1" Abonné
+       
+       Exemplaire -- ÉtatsTransitions
+       
+       package ÉtatsTransitions {
+       class Disponible << (S, cyan) >>
+       class Indisponible << (S, cyan) >>
+       Disponible --> Indisponible
+       Disponible <-- Indisponible
+       }      
+       
+       }
+           
+    #+END_SRC
+     
+     #+RESULTS: class_diagram_3
+     [[file:class_diagram_3.png]]
 
 *** Diagramme d'instance
 
