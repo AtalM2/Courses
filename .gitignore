@@ -1,6 +1,8 @@
 *~
 *.pdf
+*.dvi
 *.aux
 *.log
 *.out
+*/auto/*
 Makefile
