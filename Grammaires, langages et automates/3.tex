@@ -122,7 +122,7 @@ Soit $T_1$ un lexique définit comme:\\
     \mypath{\start}{\waypoints};
     \foreach \x / \y in {5/ALEX, 8/AIME, 11/LES, 17/FRITES}
       \path (\x) edge node {\textvisiblespace:\y} (18);
-    \path (18) edge [bend left=65] node {$\varepsilon$:$\varepsilon$} (1);
+    \path (18) edge [bend left=90, looseness=0.65] node {$\varepsilon$:$\varepsilon$} (1);
   \end{tikzpicture}
 }
 
