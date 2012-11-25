@@ -1,0 +1,292 @@
+\documentclass[a4paper, 12pt, fleqn]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage[autolanguage]{numprint}
+\usepackage{libertine}
+\usepackage{euler}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata}
+
+\newcommand\K{\mathbb{K}}
+
+\title{Transducteurs Pondérés/Probabilistes}
+
+\author{Jérémie Bourdon}
+
+\date{2012}
+
+\begin{document}
+
+\maketitle
+
+\section{Transducteurs à états finis}
+\label{sec:transd-etats-finis}
+
+\subsection{Définitions}
+\label{sec:definition}
+
+\paragraph{Transducteur}
+\label{sec:transducteur-t}
+
+
+
+Un transducteur $T$ est défini par un 6-uplet
+
+\begin{equation*}
+  (\Sigma_1, \Sigma_2, Q, q_0, F, \delta)
+\end{equation*}
+Avec
+
+\begin{equation*}
+  \begin{array}{r|l}
+    \Sigma_1 & \text{Alphabet d'entrée}         \\
+    \Sigma_2 & \text{Alphabet de sortie}        \\
+    Q        & \text{Ensemble des états}        \\
+    q_0      & \text{État initial}              \\
+    F        & \text{Ensemble des états finaux} \\
+    \delta   & \text{Fonction de transition}    \\
+  \end{array}
+\end{equation*}
+Et
+\begin{equation*}
+  \delta: \Sigma_1 \times Q \times \Sigma_2 \rightarrow 2^Q
+\end{equation*}
+
+\paragraph{Relation exprimée par un transducteur}
+\label{sec:relat-expr-par}
+
+Soit $a = a_1 \dots a_m \in \Sigma_1^*$ et $b = b_1 \dots b_n \in
+\Sigma_2^*$. Alors $a$ et $b$ sont en relation si $T$ permet d'écrire
+$b$ en lisant $a$ et en s'arr\^etant sur un état final.
+
+$R(T)$ est la relation associée au transducteur $T$.
+
+\subsection{Composition sur les transducteurs}
+\label{sec:operations-de-base}
+
+Pour introduire la composition sur les transducteurs, on peut dire que
+cela ressemble à faire un pipe sous un système UNIX : la sortie du
+premier transducteur est \og branchée\fg{} sur l'entrée du second.
+
+Formellement, soit $T_a (\Sigma_1, \Sigma_2, Q_a, q_{a0}, F_a,
+\delta_a)$ et $T_b (\Sigma_2, \Sigma_3, Q_b, q_{b0}, F_b,
+\delta_b)$, alors on a :
+\begin{equation*}
+  R(T_a) \circ R(T_b) := \{(u, w) \in \Sigma_1 \times \Sigma_3 \,
+  \vert \, \exists v \in \Sigma_2 \text{ tq } (u, v) \in R(T_a) \text{
+    et } (v, w) \in R(T_b)\}
+\end{equation*}
+
+Soit $T_1$ un lexique définit comme:\\
+\scalebox{0.85}{
+  \begin{tikzpicture}[initial text=,%
+    initial distance=3mm,%
+    node distance=2cm,%
+    thick,%
+    inner sep=2pt,%
+    ->,
+    above,
+    sloped]
+  
+    \shorthandoff{:}
+
+    \tikzstyle{every node}=[font=\footnotesize]
+  
+    \node[initial,state] (1) {}; \node[state] (9) [right of=1] {};
+    \node[state] (2) [above of=9] {}; \node[state] (6) [right of=2]
+    {}; \node[state] (3) [above of=6] {}; \node[state] (12) [below
+    of=9] {};
+  
+    \foreach \x / \y in {%
+      3/{4, 5},%
+      6/{7, 8},%
+      9/{10, 11},%
+      12/{13, ..., 17}} { \def\lastz{\x} \foreach \z [remember=\z as
+      \lastz] in \y { \node[state] (\z) [right of=\lastz] {}; } }
+
+    \node[state,accepting] (18) [right of=11, above right of=17] {};
+  
+    \newcommand\mypath[2]{ \def\lastx{#1} \foreach \x / \y
+      [remember=\x as \lastx] in #2 { \path (\lastx) edge [->] node
+        {\y:$\varepsilon$} (\x); }}
+    \foreach \start / \waypoints in {%
+      1/{2/A, 3/L, 4/E, 5/X},%
+      2/{6/I, 7/M, 8/E},%
+      1/{9/L, 10/E, 11/S},%
+      1/{12/F, 13/R, 14/I, 15/T, 16/E, 17/S}}
+    \mypath{\start}{\waypoints};
+    \foreach \x / \y in {5/ALEX, 8/AIME, 11/LES, 17/FRITES}
+      \path (\x) edge node {\textvisiblespace:\y} (18);
+    \path (18) edge [bend left=65] node {$\varepsilon:\varepsilon$} (1);
+  \end{tikzpicture}
+}
+
+Soit $T_2$, un dictionnaire définit comme:\\
+\scalebox{0.85}{
+  \begin{tikzpicture}[%
+    initial text=, initial distance=3mm,%
+    thick, ->,%
+    sloped, above]
+
+    \shorthandoff{:}
+    
+    \tikzstyle{every node}=[font=\footnotesize]
+    
+    \node [state, initial]   (S) at (0, 0) {};
+    \node [state, accepting] (F) at (8, 0) {};
+    \path (S) edge [loop above] node {$\varepsilon$:$\varepsilon$} ()
+          (S) edge [bend left=60] node {ALEX:NOM\textvisiblespace} (F)
+          (S) edge [bend left=40] node {AIME:VERBE\textvisiblespace} (F)
+          (S) edge [bend left=20] node {LES:PRONOM\textvisiblespace} (F)
+          (S) edge node {FRITES:NOM\textvisiblespace} (F)
+          (F) edge [bend left] node {$\varepsilon$:$\varepsilon$} (S);
+  \end{tikzpicture}
+}
+
+Alors $T_1 \circ T_2$ est le transducteur qui prend une phrase en
+entrée et rend les fonctions grammaticales des mots qu'elle comprend.
+
+\section{Transducteurs pondérés \og à la Mohri\fg}
+\label{sec:autom-pond}
+
+\subsection{Pondérations}
+\label{sec:ponderations}
+
+En sus des transducteurs habituels, il faut définir quels sont les
+poids autorisés pour que ceux-ci soient compatibles avec les
+opérations sur les transducteurs. On parle de semi-anneaux.
+
+Quelques exemples :
+
+\begin{equation*}
+  \begin{array}{l|lllll}
+                    & \text{Ensemble}                      & \oplus       & \otimes & \bar{0} & \bar{1} \\
+    \hline
+    \text{Booléens} & \{0, 1\}                             & \lor         & \land   & \top    & \bot    \\
+    \text{Probas}   & \mathbb{R}^+                         & +            & \times  & 0       & 1       \\
+    \text{Log}      & \mathbb{R} \cup \{+\infty, -\infty\} & \oplus_{Log} & +       & +\infty & 0       \\
+    \text{Tropical} & \mathbb{R} \cup \{+\infty, -\infty\} & min          & +       & +\infty & 0       \\
+  \end{array}
+\end{equation*}
+
+\subsection{Définition}
+\label{sec:definition-1}
+
+Un transducteur pondéré sur un semi anneau $\K$ est défini par
+l'octuplet
+
+\begin{equation*}
+  (\Sigma_1, \Sigma_2, Q, q_0, F, \delta, \lambda, \rho)
+\end{equation*}
+Avec
+
+\begin{equation*}
+  \begin{array}{r|l}
+    \Sigma_1 & \text{Alphabet d'entrée}         \\
+    \Sigma_2 & \text{Alphabet de sortie}        \\
+    Q        & \text{Ensemble des états}        \\
+    q_0      & \text{État initial}              \\
+    F        & \text{Ensemble des états finaux} \\
+    \delta   & \text{Fonction de transition}    \\
+    \lambda  & \text{Pondérations initiales}    \\
+    \rho     & \text{Pondérations finales}      \\
+  \end{array}
+\end{equation*}
+
+Et
+
+\begin{equation*}
+  \begin{array}{llll}
+    \delta:  & (\Sigma_1 \cup \{\varepsilon\})
+    \times Q
+    \times (\Sigma_2 \cup \{\varepsilon\})
+    \times \mathbb{K}
+             & \rightarrow & 2^Q                      \\
+    \lambda: & \{q_0\}     & \rightarrow & \mathbb{K} \\
+    \rho:    & F           & \rightarrow & \mathbb{K} \\
+
+  \end{array}
+\end{equation*}
+
+\subsection{Exemple --- Composition}
+\label{sec:exemple}
+Soit $T_1$ avec $\K$ tropical :\\
+\begin{tikzpicture}[%
+  initial text=, initial where=below, initial distance=3mm,%
+  thick, ->,%
+  node distance=3cm]% arrows
+  
+  \shorthandoff{:}
+  
+  \node [state, initial]   (0) at (0, 0) {0};
+  \node [state]            (1) [right of=0] {1};
+  \node [state]            (2) [right of=1] {2};
+  \node [state with output, accepting] (3) [right of=2] {3 \nodepart{lower} 0.7};
+  \path (0) edge [bend left] node [above] {a:b/0.1} (1)
+        (1) edge [bend left] node [below] {a:b/0.2} (0)
+        (1) edge node [above] {b:b/0.3} (2)
+        (1) edge [bend right] node [below] {b:b/0.4} (3)
+        (2) edge node [above] {a:b/0.5} (3)
+        (3) edge [loop above] node {a:a / 0.6} ();
+  
+\end{tikzpicture}
+
+$T_2$ avec $\K$ tropical:\\
+\begin{tikzpicture}[%
+  initial text=, initial where=below, initial distance=3mm,%
+  thick, ->,%
+  node distance=3cm]% arrows
+  
+  \shorthandoff{:}
+  
+  \node [state, initial]   (0) at (0, 0) {0};
+  \node [state]            (1) [right of=0] {1};
+  \node [state]            (2) [right of=1] {2};
+  \node [state with output, accepting] (3) [right of=2] {3 \nodepart{lower} 0.6};
+  \path (0) edge node [above] {b:b/0.1} (1)
+        (1) edge [loop above] node [above] {b:a/0.2} ()
+        (1) edge node [above] {a:b/0.3} (2)
+        (1) edge [bend right] node [below] {a:b/0.4} (3)
+        (2) edge node [above] {b:a/0.5} (3);
+  
+\end{tikzpicture}
+
+Alors $T_1 \circ T_2$ est:\\
+\begin{tikzpicture}[%
+  initial text=, initial where=below, initial distance=3mm,%
+  thick, ->,%
+  node distance=3cm]% arrows
+  
+  \shorthandoff{:}
+  
+  \node [state, initial]               (00)               {(0, 0)};
+  \node [state]                        (11) [right of=00] {(1, 1)};
+  \node [state]                        (01) [above of=11] {(0, 1)};
+  \node [state]                        (21) [right of=11] {(2, 1)};
+  \node [state]                        (31) [right of=21] {(3, 1)};
+  \node [state]                        (32) [above right of=31] {(3, 2)};
+  \node [state with output, accepting] (33) [below right of=31] {(3, 3) \nodepart{lower} 1.3};
+  \path (00) edge              node [above]         {a:b/0.2} (11)
+        (01) edge [bend left]  node [right]         {a:a/0.3} (11)
+        (11) edge [bend left]  node [left]          {a:a/0.4} (01)
+        (11) edge              node [above]         {b:a/0.5} (21)
+        (11) edge [bend right] node [below]         {b:a/0.6} (31)
+        (21) edge              node [above]         {a:a/0.7} (31)
+        (31) edge              node [above, sloped] {a:b/0.9} (32)
+        (31) edge              node [above, sloped] {a:b/1}   (33);
+  
+\end{tikzpicture}
+
+En effet, la composition est effectuée de m\^eme manière que sans les
+pondérations, sauf qu'il faut savoir gérer les poids:
+
+\begin{equation*}
+  [T_1 \circ T_2](x, y) = \bigoplus_{z \in \Sigma_2} (T_1(x, z) \otimes T_2(z, y))
+\end{equation*}
+
+\end{document}
