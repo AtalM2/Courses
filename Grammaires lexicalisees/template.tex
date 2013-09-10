@@ -1,0 +1,41 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Linux Libertine O}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{qtree}
+$if(tables)$
+\usepackage{longtable}
+$endif$
+\usepackage[francais]{babel}
+\usepackage[autolanguage]{numprint}
+\graphicspath{{./img/}}
+\DeclareGraphicsExtensions{.png,.jpg}
+\renewcommand*\thesection{\arabic{section}}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+$if(title)$
+\title{$title$}
+$endif$
+
+\date{}
+
+$if(author)$
+\author{$author$}
+$endif$
+
+\begin{document}
+
+\maketitle
+
+$body$
+
+\end{document}
