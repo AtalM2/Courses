@@ -1,0 +1,144 @@
+#+TITLE:     Notes du module de grammaires lexicalisées
+#+AUTHOR:    Hugo Mougard
+#+EMAIL:     mog@crydee.eu
+#+DATE:      \today
+#+LATEX_HEADER: \usepackage{qtree}
+#+LATEX_CMD: xelatex
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  fr
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+* Grammaires lexicalisées
+  Une grammaire lexicalisée est une grammaire dont toutes les règles
+  contiennent au moins un terminal.
+  
+* Forme normale de Greibach
+  Concerne les langages propres (sans ε) dont les grammaires (propres
+  elles aussi, ou réduites) sont sous la forme
+  
+  #+BEGIN_VERSE
+  V → XV*
+  #+END_VERSE
+  
+  où =X= est terminal et =V= non-terminal.
+  
+  Par exemple, voici une grammaire lexicale :
+  
+  #+BEGIN_VERSE
+  S → aST | bUU | a
+  T → bT | cSCU | cTU
+  U → aU | bC
+  C → c
+  #+END_VERSE
+  
+  Et l'arbre de parsing de la phrase =abbcabcbcacabc= en utilisant cette
+  grammaire :
+  
+  #+BEGIN_LaTeX
+  \[
+  \Tree
+  [.S a
+  [.S b
+  [.U b [.C c ] ]
+  [.U a [.U b [.C c ] ] ]
+  ]
+  [.T b
+  [.T c
+  [.S a ]
+  [.C c ]
+  [.U a [.U b [.C c ] ] ]
+  ]
+  ]
+  ]
+  \]
+  #+END_LaTeX 
+  
+  On peut aussi « inverser » la grammaire pour la centrer sur les
+  terminaux :
+  
+  #+BEGIN_VERSE
+  a    → S
+  aST  → S
+  aU   → U
+  bUU  → S
+  bT   → T
+  bC   → U
+  cSCU → T
+  cTU  → T
+  c    → C
+  #+END_VERSE
+  
+** Traduction en automate à piles :
+   En utilisant la grammaire inversée ci-dessus, on peut produire le
+   tableau ci-dessous :
+   
+   |   | S   | T | U | C |
+   |---+-----+---+---+---|
+   | a | ε   |   | U |   |
+   |   | ST  |   |   |   |
+   |---+-----+---+---+---|
+   | b | UU  | T | C |   |
+   |---+-----+---+---+---|
+   | c | SCU |   |   | ε |
+   |   | TU  |   |   |   |
+   
+   Le tableau se lit, par exemple pour la case (a, S) : on peut dépiler S
+   si on lit a et qu'on empile ε ou T puis S.
+   
+   Exemple d'exécution :
+   
+   #+BEGIN_VERSE
+   bande : abb, pile S
+   → lit a
+   → bande : bb, dépile S, empile ST, pile ST
+   → lit b
+   → bande : b,  dépile S, empile UU, pile UUT
+   → lit b
+   → bande : #,  dépile U, empile C,  pile CUT
+   #+END_VERSE
+   
+** Transformation en forme normale de Greibach :
+   
+   Tout d'abord, il faut noter quels sont les problèmes :
+   
+   - les règles produisant ε ne sont pas tolérées (on vise une
+     grammaire propre)
+   - les règles récursives à gauche ne sont pas tolérées
+     
+   Voici maintenant l'algorithme pour transformer les règles récursives à
+   gauche en règles récursives à droite :
+   
+   Pour tout V_i non terminal, on introduit V_i' puis, on transforme
+   tout règle de la forme :
+   
+   #+BEGIN_VERSE
+   V_j → V_{i}m_1 | V_{i}m_2 | ... | V_{i}m_p | w_1 | w_2 | ... | w_q
+   #+END_VERSE
+   
+   en
+   
+   #+BEGIN_VERSE
+   V_j → w_{1}V_{i}' | w_{2}V_{i}' | ... | w_{q}V_{i}'
+   #+END_VERSE
+   
+   et
+   
+   #+BEGIN_VERSE
+   V_i' → m_{1}V_{i}' | m_{2}V_{i}' | ... | m_{p}V_{i}' | m_1 | m_2 | ... | m_p
+   #+END_VERSE
+   
+   Exemple :
+   
+   #+BEGIN_VERSE
+   A → BC
+   B → AB | a
+   C → AC | b
+   #+END_VERSE
