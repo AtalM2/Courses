@@ -4,5 +4,7 @@
 *.aux
 *.log
 *.out
+*.fdb_latexmk
+/Grammaires lexicalisees/grammar.tex
 */auto/*
 Makefile
