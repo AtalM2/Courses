@@ -3,6 +3,8 @@
 #+EMAIL:     mog@crydee.eu
 #+DATE:      \today
 #+LATEX_HEADER: \usepackage{qtree}
+#+LATEX_HEADER: \usepackage{avm}
+#+LATEX_HEADER: \avmoptions{active}
 #+LATEX_CMD: xelatex
 #+DESCRIPTION:
 #+KEYWORDS:
@@ -197,5 +199,140 @@
        #+END_VERSE
        Apporter un argument.
        
-* Head-driven Phrase Structure Grammar
-  
+* Head-driven Phrase Structure Grammars
+  Grammaires de constituants. Basées sur les principes suivants :
+  - on ne veut pas de transformation
+  - grammaires axées sur les têtes des syntagmes, laissant certaines
+    constructions au lexique (comme la cliticisation)
+  - utilise des structures de traits et AVM (Attribute Value Matrix)
+    
+** Structures de traits
+   
+   Une structure de traits est composée d'un type et d'une structure
+   de traits:
+   
+   #+BEGIN_LaTeX
+   \begin{avm}
+   [word \\
+   PHON & list(phonestring) \\
+   SYNSEM &
+   [synsem \\
+   LOCAL &
+   [loc & \\
+   CAT & [TETE & tête \\ VALENCE & [SPR & [synsem] \\ SUJ & [synsem] \\ COMPL & [list(synsem)]]] \\
+   CONTENU & [ ] \\
+   CONTEXTE & [ ]
+   ] \\
+   NON-LOCAL & [n-loc]
+   ]
+   ]
+   \end{avm}
+   #+END_LaTeX
+   
+   Les structures de traits s'obtiennent en instanciant signe :
+   
+   #+BEGIN_LaTeX
+   \[
+   \Tree
+   [.signe [.mot ... ] [.syntagme ... ] ]
+   \]
+   #+END_LaTeX
+   
+   On peut par exemple définir la structure de traits de walks :
+   
+   #+BEGIN_LaTeX
+   \begin{avm}
+   [word \\
+   PHON & <'walks'> \\
+   SYNSEM & [synsem \\ LOCAL [CAT [HEAD & verb \\ VALENCE & [SUBJ & [LOCAL [CAT [HEAD & noun]]]]]]]
+   ]
+   \end{avm}
+   #+END_LaTeX
+   
+   Et she :
+   
+   #+BEGIN_LaTeX
+   \begin{avm}
+   [word \\
+   PHON & <'she'> \\
+   SYNSEM & [synsem \\ LOCAL  [CAT & [HEAD & noun] \\ CONT & … ]]
+   ]
+   \end{avm}
+   #+END_LaTeX
+   
+   Maintenant une structure syntagmatique :
+   
+   #+BEGIN_LaTeX
+   \begin{avm}
+   [head-subj-phrase \\
+   PHON & <@1 + @2> \\
+   SYNSEM & [synsem \\ LOCAL [CAT [HEAD & @3 \\ VALENCE & [SUBJ <>]]] \\ …] \\
+   HEAD-DTR & [PHON & @2 \\ SYNSEM & [LOCAL [CAT [HEAD @3]]]] \\
+   NON-HEAD-DTR & [PHON & @1 \\ … ]
+   ]
+   \end{avm}
+   #+END_LaTeX
+   
+   Principe de construction : on peut par exemple combiner she et
+   walks en tant que NON-HEAD-DTR et HEAD-DTR respectivement grâce au
+   syntagme head-subj-phrase.
+   
+   Exemple : Félix aime les chatouilles
+   
+   + Félix :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & nom \\ SPR  & <> \\ COMPS & <>]
+     \end{avm}
+     #+END_LaTeX
+     
+   + aime :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & verbe @3 \\ SUJ  & @1 \\ COMPS & @2]
+     \end{avm}
+     #+END_LaTeX
+     
+   + les :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE det]
+     \end{avm}
+     #+END_LaTeX
+     
+   + chatouilles :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & nom @4 \\ SPR & <@5> \\ COMPS & <>]
+     \end{avm}
+     #+END_LaTeX
+     
+   + puis on peut combiner les et chatouilles en une structure
+     spécifieur - syntagme :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & nom @4 \\ SPR & <> \\ COMPS & <>]
+     \end{avm}
+     #+END_LaTeX
+     
+   + puis on peut combiner aime et les chatouilles en une structure
+     complément - syntagme :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & @3 \\ SPR & <@1> \\ COMPS & <>]
+     \end{avm}
+     #+END_LaTeX
+     
+   + et enfin Félix et aime les chatouilles :
+     
+     #+BEGIN_LaTeX
+     \begin{avm}
+     [TETE & @3 \\ SPR & <> \\ COMPS & <>]
+     \end{avm}
+     #+END_LaTeX
