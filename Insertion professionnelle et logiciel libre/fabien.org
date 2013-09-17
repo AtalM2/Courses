@@ -39,6 +39,27 @@
    - dire à haute voix les changements effectués sur le tableau pour
      que tout le monde en profite
 
+** Méthode xP
+   - Peer programming
+   - Test Driven Development
+
+** Méthode SCRUM
+   - une seule équipe qui comprend le client
+   - communication centrale : scrum journalier (15 min tous les
+     matins) :
+     - qu'est-ce que j'ai fait ?
+     - blocages ?
+     - qu'est-ce que je vais faire ?
+   - planning : découpage en sprints (1 sprint = 1 itération /
+     cycle) : version fonctionnelle. Pour éviter les effets tunnels
+   - story : idée de quelque chose de fonctionnel à implémenter. On
+     lui donne un coût en points ou en $\frac{1}{2}$ journées ou
+     heures.
+   - les stories sont ensuite découpées en tâches techniques d'une
+     journée maximum qui sont affectées à une personne.
+   - à la fin d'un sprint, une sprint retrospective souligne ce qui a
+     marché et ce qui n'a pas marché
+
 * 24/09 Lancement du projet
 * 18/10 Startup week-end
 * 06/11 Sprint 1 / Communication pour la collaboration
