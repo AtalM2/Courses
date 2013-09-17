@@ -1,0 +1,51 @@
+#+TITLE:     Notes sur le cours de Fabien
+#+AUTHOR:    Mog
+#+EMAIL:     mog@crydee.eu
+#+DATE:      \today
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  fr
+#+LATEX_CMD: xelatex
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+
+* 10/09 Méthodes agiles partie 1/2
+* 17/09 Méthodes agiles partie 2/2
+** Bonnes pratiques pour un tableau agile :
+   - un post-it par personne et par tâche
+   - une ligne par projet
+   - trois colonnes :
+     - TODO: tâches à faire, en colonne pour les tâches séquentielles,
+       en ligne pour les tâches parallèlisables
+     - DOING: tâches en cours, avec la personne qui travaille dessus
+       superposée
+     - DONE: tâches effectuées
+   - les projets sont complétés avec leur priorité et leurs dates de
+     début et fin
+   - la colonne DONE a un axe pour indiquer le nombre d'itérations
+     prises par une tâche
+   - la colonne DOING a une sous colonne pour les tâches en retard
+   - un espace est réservé aux personnes indisponibles
+   - indiquer le temps restant sur le chemin critique, la date de
+     départ qui ne laisserait aucune marge sur le chemin critique et
+     la date de livraison
+   - dire à haute voix les changements effectués sur le tableau pour
+     que tout le monde en profite
+
+* 24/09 Lancement du projet
+* 18/10 Startup week-end
+* 06/11 Sprint 1 / Communication pour la collaboration
+* 13/11 Sprint 2 / Outils de gestion de version
+* 20/11 Sprint 3 / Architectures distribuées
+* 27/11 Sprint 4 / Qualité
+* 04/12 Sprint 5 / Licences logicielles
+* 11/12 Rendu projet
+* 18/12 Pitchs + Startup
+

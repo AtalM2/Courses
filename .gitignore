@@ -6,5 +6,6 @@
 *.out
 *.fdb_latexmk
 /Grammaires lexicalisees/grammar.tex
+/Insertion professionnelle et logiciel libre/fabien.tex
 */auto/*
 Makefile
