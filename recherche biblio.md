@@ -8,6 +8,7 @@ Plusieurs moyens d'accès aux papiers
     moins 2 revues TALN (terminology et natural language
     engineering). Ouverture de 8h30 à 17h30. Bâtiment à côté du LINA.
   - BU
+  - Greg pour ACM
 
 [1]: http://bibliost2i.inist.fr/
 [2]: http://www.bu.univ-nantes.fr/72734863/0/fiche___pagelibre/
