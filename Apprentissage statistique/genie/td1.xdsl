@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network1" numsamples="1000" discsamples="10000">
+	<nodes>
+		<cpt id="Spam">
+			<state id="Oui" />
+			<state id="Non" />
+			<probabilities>0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="X4">
+			<state id="Oui" />
+			<state id="Non" />
+			<parents>Spam</parents>
+			<probabilities>0.3 0.7 0.01 0.99</probabilities>
+		</cpt>
+		<cpt id="Copy_2_of_Spam">
+			<state id="Oui" />
+			<state id="Non" />
+			<parents>Spam</parents>
+			<probabilities>0.01 0.99 0.3 0.7</probabilities>
+		</cpt>
+		<cpt id="Copy_3_of_Spam">
+			<state id="Oui" />
+			<state id="Non" />
+			<parents>Spam</parents>
+			<probabilities>0.1 0.9 0.001 0.999</probabilities>
+		</cpt>
+		<cpt id="Copy_4_of_Spam">
+			<state id="Seul" />
+			<state id="Parmi_N" />
+			<state id="Non" />
+			<parents>Spam</parents>
+			<probabilities>0.02 0.2 0.78 0.78 0.2 0.02</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.4843.0" name="Network1" faultnameformat="nodestate">
+			<node id="Spam">
+				<name>Spam</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>523 283 566 309</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="X4">
+				<name>X4</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>850 412 893 438</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Copy_2_of_Spam">
+				<name>X3</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>647 449 690 475</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Copy_3_of_Spam">
+				<name>X2</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>458 468 501 494</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Copy_4_of_Spam">
+				<name>X1</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>248 465 291 491</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
